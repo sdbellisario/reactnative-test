@@ -1,47 +1,15 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, Flatlist } from 'react-native';
+import { ScrollView, Text, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
-import { FlatList } from 'react-native-gesture-handler';
-import { PARTNERS } from '../shared/partners';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+import Loading from './LoadingComponent';
 
-class About extends Component {
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            partners: PARTNERS
-        };
-    }
-
-    static navigationOptions = {
-        title: 'About Us'
-    }
-    
-    render() {
-        const renderPartner = ({item}) => {
-            return (
-                <ListItem
-                title={item.name}
-                subtitle={item.description}
-                leftAvatar={{source: require("./images/bootstrap-logo.png")}}
-                />
-            );
-        }
-        
-        return (
-            <ScrollView>
-                <Mission />
-                    <Card title="Community Partners">
-                        <FlatList
-                        data={this.state.partners}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={renderPartner}
-                        />
-                    </Card>
-            </ScrollView>
-        )
-    }
-}
+const mapStateToProps = state => {
+    return {
+        partners: state.partners
+    };
+};
 
 function Mission() {
     return (
@@ -53,5 +21,60 @@ function Mission() {
     )
 }
 
+class About extends Component {
 
-export default About;
+    static navigationOptions = {
+        title: 'About Us'
+    }
+    
+    render() {
+        const renderPartner = ({item}) => {
+            return (
+                <ListItem
+                title={item.name}
+                subtitle={item.description}
+                leftAvatar={{source: {uri: baseUrl + item.image}}}
+                />
+            );
+        }
+
+        if (this.props.partners.isLoading) {
+            return (
+                <ScrollView>
+                    <Mission />
+                    <Card
+                        title='Community Partners'>
+                        <Loading />
+                    </Card>
+                </ScrollView>
+            );
+        }
+        if (this.props.partners.errMess) {
+            return (
+                <ScrollView>
+                    <Mission />
+                    <Card
+                        title='Community Partners'>
+                        <Text>{this.props.partners.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            );
+        }
+        
+        return (
+            <ScrollView>
+                <Mission />
+                    <Card title="Community Partners">
+                    <FlatList 
+                        data={this.props.partners.partners}
+                        renderItem={renderPartner}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                    </Card>
+            </ScrollView>
+        )
+    }
+}
+
+
+export default connect(mapStateToProps)(About);
