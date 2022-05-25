@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
+import * as Animatable from 'react-native-animatable';
 
 class Contact extends Component {
     
