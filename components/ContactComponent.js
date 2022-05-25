@@ -16,8 +16,8 @@ class Contact extends Component {
                 title="Contact Information"
                 /*wrapperStyle={{margin: 30}}*/
                 >
-                    {<Divider />}
-                    {<View style={{margin: 20}} />}
+                    <Divider />
+                    <View style={{margin: 20}} />
                     <Text>1 Nucamp Way</Text>
                     <Text>Seattle, WA 98001</Text>
                     <Text>U.S.A</Text>

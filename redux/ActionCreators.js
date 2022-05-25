@@ -26,6 +26,11 @@ export const commentsFailed = errMess => ({
     payload: errMess
 });
 
+export const deleteFavorite = campsiteId => ({
+    type: ActionTypes.DELETE_FAVORITE,
+    payload: campsiteId
+});
+
 export const addComments = comments => ({
     type: ActionTypes.ADD_COMMENTS,
     payload: comments
