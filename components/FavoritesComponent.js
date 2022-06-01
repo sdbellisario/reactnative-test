@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, StyleSheet, Alert } from 'react-native';
+import { Text, View, ScrollView, FlatList,
+    Modal, Button, StyleSheet,
+    Alert, PanResponder } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Loading } from './LoadingComponent';
@@ -12,6 +14,7 @@ import * as Animatable from 'react-native-animatable';
 const mapStateToProps = state => {
     return {
         campsites: state.campsites,
+        comments: state.comments,
         favorites: state.favorites
     };
 };
@@ -19,6 +22,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     deleteFavorite: campsiteId => deleteFavorite(campsiteId)
 };
+
+
 
 class Favorites extends Component {
 
